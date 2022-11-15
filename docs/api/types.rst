@@ -1,0 +1,4 @@
+Types
+=====
+
+.. doxygenenum:: PL::NvsAccessMode
