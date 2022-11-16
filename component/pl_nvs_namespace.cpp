@@ -1,4 +1,9 @@
 #include "pl_nvs_namespace.h"
+#include "esp_check.h"
+
+//==============================================================================
+
+static const char* TAG = "pl_nvs_namespace";
 
 //==============================================================================
 
@@ -29,21 +34,28 @@ NvsNamespace::~NvsNamespace() {
 //==============================================================================
 
 esp_err_t NvsNamespace::Lock (TickType_t timeout) {
-  return mutex.Lock (timeout);
+  esp_err_t error = mutex.Lock (timeout);
+  if (error == ESP_OK)
+    return ESP_OK;
+  if (error == ESP_ERR_TIMEOUT && timeout == 0)
+    return ESP_ERR_TIMEOUT;
+  ESP_RETURN_ON_ERROR (error, TAG, "NVS namespace lock failed");
+  return ESP_OK;
 }
 
 //==============================================================================
 
 esp_err_t NvsNamespace::Unlock() {
-  return mutex.Unlock();
+  ESP_RETURN_ON_ERROR (mutex.Unlock(), TAG, "NVS namespace unlock failed");
+  return ESP_OK;
 }
 
 //==============================================================================
 
 esp_err_t NvsNamespace::Read (const std::string& key, uint8_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_u8 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_u8 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -51,8 +63,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, uint8_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, uint8_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_u8 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_u8 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -60,8 +72,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, uint8_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, int8_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_i8 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_i8 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -69,8 +81,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, int8_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, int8_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_i8 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_i8 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -78,8 +90,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, int8_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, uint16_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_u16 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_u16 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -87,8 +99,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, uint16_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, uint16_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_u16 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_u16 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -96,8 +108,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, uint16_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, int16_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_i16 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_i16 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -105,8 +117,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, int16_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, int16_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_i16 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_i16 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -114,8 +126,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, int16_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, uint32_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_u32 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_u32 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -123,8 +135,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, uint32_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, uint32_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_u32 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_u32 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -132,8 +144,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, uint32_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, int32_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_i32 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_i32 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -141,8 +153,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, int32_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, int32_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_i32 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_i32 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -150,8 +162,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, int32_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, uint64_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_u64 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_u64 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -159,8 +171,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, uint64_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, uint64_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_u64 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_u64 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -168,8 +180,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, uint64_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, int64_t& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_get_i64 (handle, key.c_str(), &value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_get_i64 (handle, key.c_str(), &value), TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -177,8 +189,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, int64_t& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, int64_t value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_i64 (handle, key.c_str(), value));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_i64 (handle, key.c_str(), value), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -186,11 +198,11 @@ esp_err_t NvsNamespace::Write (const std::string& key, int64_t value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, std::string& value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
   size_t valueSize;
-  PL_RETURN_ON_ERROR (nvs_get_str (handle, key.c_str(), NULL, &valueSize));
+  ESP_RETURN_ON_ERROR (nvs_get_str (handle, key.c_str(), NULL, &valueSize), TAG, "NVS read '%s' failed", key.c_str());
   std::unique_ptr<char[]> tempValue (new char[valueSize]);
-  PL_RETURN_ON_ERROR (nvs_get_str (handle, key.c_str(), tempValue.get(), &valueSize));
+  ESP_RETURN_ON_ERROR (nvs_get_str (handle, key.c_str(), tempValue.get(), &valueSize), TAG, "NVS read '%s' failed", key.c_str());
   value = tempValue.get();
   return ESP_OK;
 }
@@ -199,8 +211,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, std::string& value) {
 
 esp_err_t NvsNamespace::Write (const std::string& key, std::string value) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_str (handle, key.c_str(), value.c_str()));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_str (handle, key.c_str(), value.c_str()), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -208,11 +220,11 @@ esp_err_t NvsNamespace::Write (const std::string& key, std::string value) {
 
 esp_err_t NvsNamespace::Read (const std::string& key, void* data, size_t maxDataSize, size_t* dataSize) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
   esp_err_t error = nvs_get_blob (handle, key.c_str(), data, &maxDataSize);
   if (dataSize)
     *dataSize = maxDataSize;
-  PL_RETURN_ON_ERROR (error);
+  ESP_RETURN_ON_ERROR (error, TAG, "NVS read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -220,8 +232,8 @@ esp_err_t NvsNamespace::Read (const std::string& key, void* data, size_t maxData
 
 esp_err_t NvsNamespace::Write (const std::string& key, const void* data, size_t dataSize) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_set_blob (handle, key.c_str(), (const char*)data, dataSize));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_set_blob (handle, key.c_str(), (const char*)data, dataSize), TAG, "NVS write '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -229,8 +241,8 @@ esp_err_t NvsNamespace::Write (const std::string& key, const void* data, size_t 
 
 esp_err_t NvsNamespace::Erase (const std::string& key) {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_erase_key (handle, key.c_str()));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_erase_key (handle, key.c_str()), TAG, "NVS erase '%s' failed", key.c_str());
   return ESP_OK;
 }
 
@@ -238,8 +250,8 @@ esp_err_t NvsNamespace::Erase (const std::string& key) {
 
 esp_err_t NvsNamespace::Erase() {
   LockGuard lg (*this);
-  PL_RETURN_ON_ERROR (Open());
-  PL_RETURN_ON_ERROR (nvs_erase_all (handle));
+  ESP_RETURN_ON_ERROR (Open(), TAG, "NVS namespace open failed");
+  ESP_RETURN_ON_ERROR (nvs_erase_all (handle), TAG, "NVS erase all failed");
   return ESP_OK;
 }
 
@@ -249,7 +261,7 @@ esp_err_t NvsNamespace::Commit() {
   LockGuard lg (*this);
   if (!open)
     return ESP_OK;
-  PL_RETURN_ON_ERROR (nvs_commit (handle));
+  ESP_RETURN_ON_ERROR (nvs_commit (handle), TAG, "NVS commit failed");
   return ESP_OK;
 }
 
@@ -258,7 +270,8 @@ esp_err_t NvsNamespace::Commit() {
 esp_err_t NvsNamespace::Open() {
   if (open)
     return ESP_OK;
-  PL_RETURN_ON_ERROR (nvs_open_from_partition (partitionName.c_str(), namespaceName.c_str(), accessMode == NvsAccessMode::readOnly ? NVS_READONLY : NVS_READWRITE, &handle));
+  ESP_RETURN_ON_ERROR (nvs_open_from_partition (partitionName.c_str(), namespaceName.c_str(), accessMode == NvsAccessMode::readOnly ? NVS_READONLY : NVS_READWRITE, &handle),\
+                       TAG, "NVS open '%s/%s' failed", partitionName.c_str(), namespaceName.c_str());
   open = true;
   return ESP_OK;
 }
