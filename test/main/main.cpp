@@ -79,6 +79,6 @@ void TestNvs() {
 
   TEST_ASSERT (nvsW.Erase ("u8") == ESP_OK);
   TEST_ASSERT (nvsR.Read ("u8", u8R) == ESP_ERR_NVS_NOT_FOUND);
-  TEST_ASSERT (nvsW.Erase () == ESP_OK);
+  TEST_ASSERT (nvsW.Erase() == ESP_OK);
   TEST_ASSERT (nvsR.Read ("i64", i64R) == ESP_ERR_NVS_NOT_FOUND);
 }
