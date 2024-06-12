@@ -3,6 +3,8 @@ NVS Component
 
 .. |COMPONENT| replace:: nvs
 
+.. |VERSION| replace:: 1.0.0
+
 .. include:: ../../../installation.rst
 
 .. include:: ../../../sdkconfig_common.rst
