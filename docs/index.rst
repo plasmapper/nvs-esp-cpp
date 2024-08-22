@@ -3,6 +3,8 @@ NVS Component
 
 .. |COMPONENT| replace:: nvs
 
+.. |ESP_IDF_VERSION| replace:: 5.0
+   
 .. |VERSION| replace:: 1.0.0
 
 .. include:: ../../../installation.rst
