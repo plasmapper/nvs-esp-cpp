@@ -18,6 +18,11 @@ Features
    A number of :cpp:func:`PL::NvsNamespace::Read` and :cpp:func:`PL::NvsNamespace::Write` functions read and write from/to the NVS.
    :cpp:func:`PL::NvsNamespace::Erase` functions erase one or all values. :cpp:func:`PL::NvsNamespace::Commit` writes any pending changes to the NVS. 
 
+Thread safety
+-------------
+
+Class method thread safety is implemented by having the :cpp:class:`PL::Lockable` as a base class and creating the class object lock guard at the beginning of the methods.
+
 API reference
 -------------
 
