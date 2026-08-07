@@ -8,5 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Lock timeout handling.
 
+### Fixed
+- Deprecated nvs_handle type.
+
 ## [1.0.0] - 2024-06-12
 Initial release.
