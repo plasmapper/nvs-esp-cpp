@@ -20,7 +20,7 @@ NvsNamespace::NvsNamespace(const std::string& partitionName, const std::string& 
 //==============================================================================
 
 NvsNamespace::NvsNamespace(const std::string& namespaceName, NvsAccessMode accessMode) :
-  partitionName(NVS_DEFAULT_PART_NAME), namespaceName(namespaceName), accessMode(accessMode) {}
+    NvsNamespace(NVS_DEFAULT_PART_NAME, namespaceName, accessMode) {}
 
 //==============================================================================
 
