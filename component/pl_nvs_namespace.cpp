@@ -206,7 +206,7 @@ esp_err_t NvsNamespace::Read(const std::string& key, std::string& value) {
 
 //==============================================================================
 
-esp_err_t NvsNamespace::Write(const std::string& key, std::string value) {
+esp_err_t NvsNamespace::Write(const std::string& key, const std::string& value) {
   LockGuard lg(*this);
   ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
   ESP_RETURN_ON_ERROR(nvs_set_str(handle, key.c_str(), value.c_str()), TAG, "write '%s' failed", key.c_str());

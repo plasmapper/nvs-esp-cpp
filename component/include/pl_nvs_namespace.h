@@ -79,7 +79,7 @@ public:
   /// @brief Reads the string 
   esp_err_t Read(const std::string& key, std::string& value);
   /// @brief Writes the string 
-  esp_err_t Write(const std::string& key, std::string value);
+  esp_err_t Write(const std::string& key, const std::string& value);
 
   /// @brief Reads the blob
   /// @param key key

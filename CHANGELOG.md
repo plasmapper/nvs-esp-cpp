@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Lock timeout handling.
+- NvsNamespace::Write string overload to take value by const reference.
 
 ### Fixed
 - Deprecated nvs_handle type.
