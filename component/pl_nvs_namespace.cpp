@@ -26,7 +26,10 @@ NvsNamespace::NvsNamespace(const std::string& namespaceName, NvsAccessMode acces
 
 NvsNamespace::~NvsNamespace() {
   if (open) {
-    nvs_commit(handle);
+    esp_err_t error = nvs_commit(handle);
+    if (error != ESP_OK) {
+      ESP_LOGE(TAG, "commit failed");
+    }
     nvs_close(handle);
   }
 }
