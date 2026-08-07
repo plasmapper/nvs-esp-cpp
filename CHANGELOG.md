@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Deprecated nvs_handle type.
+- Getting NVS blob actual size in NvsNamespace::Read.
 
 ## [1.0.0] - 2024-06-12
 Initial release.

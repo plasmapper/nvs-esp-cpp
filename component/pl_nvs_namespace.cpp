@@ -218,10 +218,10 @@ esp_err_t NvsNamespace::Write(const std::string& key, std::string value) {
 esp_err_t NvsNamespace::Read(const std::string& key, void* data, size_t maxDataSize, size_t* dataSize) {
   LockGuard lg(*this);
   ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_blob(handle, key.c_str(), data, &maxDataSize);
-  if (dataSize)
-    *dataSize = maxDataSize;
-  ESP_RETURN_ON_ERROR(error, TAG, "read '%s' failed", key.c_str());
+  if (dataSize) {
+    ESP_RETURN_ON_ERROR(nvs_get_blob(handle, key.c_str(), NULL, dataSize), TAG, "read '%s' failed", key.c_str());
+  }
+  ESP_RETURN_ON_ERROR(nvs_get_blob(handle, key.c_str(), data, &maxDataSize), TAG, "read '%s' failed", key.c_str());
   return ESP_OK;
 }
 
