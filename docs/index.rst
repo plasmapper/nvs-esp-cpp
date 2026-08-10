@@ -5,7 +5,7 @@ NVS Component
 
 .. |ESP_IDF_VERSION| replace:: 5.0
    
-.. |VERSION| replace:: 1.0.1
+.. |VERSION| replace:: 1.1.0
 
 .. include:: ../../../installation.rst
 
@@ -25,7 +25,7 @@ Class method thread safety is implemented by having the :cpp:class:`PL::Lockable
 
 Examples
 --------
-| `NVS <https://components.espressif.com/components/plasmapper/pl_nvs/versions/1.0.1/examples/nvs>`_
+| `NVS <https://components.espressif.com/components/plasmapper/pl_nvs/versions/1.1.0/examples/nvs>`_
 
 API reference
 -------------
