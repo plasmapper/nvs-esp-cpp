@@ -201,9 +201,9 @@ esp_err_t NvsNamespace::Read(const std::string& key, std::string& value) {
   ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
   size_t valueSize;
   ESP_RETURN_ON_ERROR(nvs_get_str(handle, key.c_str(), NULL, &valueSize), TAG, "read '%s' failed", key.c_str());
-  std::unique_ptr<char[]> tempValue(new char[valueSize]);
-  ESP_RETURN_ON_ERROR(nvs_get_str(handle, key.c_str(), tempValue.get(), &valueSize), TAG, "read '%s' failed", key.c_str());
-  value = tempValue.get();
+  Buffer tempValue(valueSize);
+  ESP_RETURN_ON_ERROR(nvs_get_str(handle, key.c_str(), (char*)tempValue.data, &valueSize), TAG, "read '%s' failed", key.c_str());
+  value = (char*)tempValue.data;
   return ESP_OK;
 }
 
