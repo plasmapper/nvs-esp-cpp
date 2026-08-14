@@ -270,8 +270,8 @@ esp_err_t NvsNamespace::Commit() {
 esp_err_t NvsNamespace::Open() {
   if (open)
     return ESP_OK;
-  ESP_RETURN_ON_ERROR(nvs_open_from_partition(partitionName.c_str(), namespaceName.c_str(), accessMode == NvsAccessMode::readOnly ? NVS_READONLY : NVS_READWRITE, &handle),\
-                       TAG, "open '%s/%s' failed", partitionName.c_str(), namespaceName.c_str());
+  ESP_RETURN_ON_ERROR(nvs_open_from_partition(partitionName.c_str(), namespaceName.c_str(), accessMode == NvsAccessMode::readOnly ? NVS_READONLY : NVS_READWRITE, &handle),
+                      TAG, "open '%s/%s' failed", partitionName.c_str(), namespaceName.c_str());
   open = true;
   return ESP_OK;
 }

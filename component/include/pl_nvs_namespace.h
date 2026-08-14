@@ -89,7 +89,7 @@ public:
   /// @return error code
   esp_err_t Read(const std::string& key, void* data, size_t maxDataSize, size_t* dataSize);
 
-  /// @brief Writes the bob
+  /// @brief Writes the blob
   /// @param key key
   /// @param data data 
   /// @param dataSize data size
