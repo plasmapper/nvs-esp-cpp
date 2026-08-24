@@ -116,7 +116,7 @@ private:
   std::string partitionName;
   std::string namespaceName;
   NvsAccessMode accessMode;
-  nvs_handle_t handle;
+  nvs_handle_t handle = 0;
   bool open = false;
 
   esp_err_t Open();
