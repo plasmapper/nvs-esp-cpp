@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - NvsNamespace::Read logging a missing key as an error to logging it as a debug message.
 
+### Fixed
+- Missing nvs_flash_init prerequisite documentation for NvsNamespace.
+
 ## [1.1.1] - 2026-08-14
 ### Changed
 - String read to use PL::Buffer instead of std::unique_ptr.

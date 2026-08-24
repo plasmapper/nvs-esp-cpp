@@ -10,6 +10,8 @@ namespace PL {
 //==============================================================================
 
 /// @brief NVS namespace class
+/// @note nvs_flash_init (with the ESP_ERR_NVS_NO_FREE_PAGES / ESP_ERR_NVS_NEW_VERSION_FOUND
+/// erase-and-retry handling) must be called before using this class.
 class NvsNamespace : public Lockable {
 public:
   /// @brief Creates an NVS namespace
