@@ -1,5 +1,6 @@
 #include "pl_nvs_namespace.h"
 #include "esp_check.h"
+#include <vector>
 
 //==============================================================================
 
@@ -240,8 +241,8 @@ esp_err_t NvsNamespace::Read(const std::string& key, std::string& value) {
       ESP_LOGE(TAG, "read '%s' failed", key.c_str());
     return error;
   }
-  Buffer tempValue(valueSize);
-  error = nvs_get_str(handle, key.c_str(), (char*)tempValue.data, &valueSize);
+  std::vector<char> tempValue(valueSize);
+  error = nvs_get_str(handle, key.c_str(), tempValue.data(), &valueSize);
   if (error != ESP_OK) {
     if (error == ESP_ERR_NVS_NOT_FOUND)
       ESP_LOGD(TAG, "read '%s' failed", key.c_str());
@@ -249,7 +250,7 @@ esp_err_t NvsNamespace::Read(const std::string& key, std::string& value) {
       ESP_LOGE(TAG, "read '%s' failed", key.c_str());
     return error;
   }
-  value = (char*)tempValue.data;
+  value = tempValue.data();
   return ESP_OK;
 }
 

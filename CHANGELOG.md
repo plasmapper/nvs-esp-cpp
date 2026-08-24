@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - NvsNamespace::Read logging a missing key as an error to logging it as a debug message.
+- NvsNamespace::Read to use std::vector instead of PL::Buffer.
 
 ### Fixed
 - Missing nvs_flash_init prerequisite documentation for NvsNamespace.
