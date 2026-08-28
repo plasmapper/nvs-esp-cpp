@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-08-28
+### Changed
+- NvsNamespace::Open logging a missing namespace as an error to logging it as a debug message.
+
 ## [1.1.2] - 2026-08-24
 ### Changed
 - NvsNamespace::Read logging a missing key as an error to logging it as a debug message.
