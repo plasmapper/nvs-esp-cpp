@@ -55,8 +55,15 @@ esp_err_t NvsNamespace::Unlock() {
 
 esp_err_t NvsNamespace::Read(const std::string& key, uint8_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_u8(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_u8(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -77,8 +84,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, uint8_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, int8_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_i8(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_i8(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -99,8 +113,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, int8_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, uint16_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_u16(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_u16(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -121,8 +142,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, uint16_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, int16_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_i16(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_i16(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -143,8 +171,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, int16_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, uint32_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_u32(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_u32(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -165,8 +200,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, uint32_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, int32_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_i32(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_i32(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -187,8 +229,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, int32_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, uint64_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_u64(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_u64(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -209,8 +258,15 @@ esp_err_t NvsNamespace::Write(const std::string& key, uint64_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, int64_t& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
-  esp_err_t error = nvs_get_i64(handle, key.c_str(), &value);
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
+  error = nvs_get_i64(handle, key.c_str(), &value);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
@@ -231,9 +287,16 @@ esp_err_t NvsNamespace::Write(const std::string& key, int64_t value) {
 
 esp_err_t NvsNamespace::Read(const std::string& key, std::string& value) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
   size_t valueSize;
-  esp_err_t error = nvs_get_str(handle, key.c_str(), NULL, &valueSize);
+  error = nvs_get_str(handle, key.c_str(), NULL, &valueSize);
   if (error != ESP_OK) {
     if (error == ESP_ERR_NVS_NOT_FOUND)
       ESP_LOGD(TAG, "read '%s' failed", key.c_str());
@@ -267,9 +330,16 @@ esp_err_t NvsNamespace::Write(const std::string& key, const std::string& value) 
 
 esp_err_t NvsNamespace::Read(const std::string& key, void* data, size_t maxDataSize, size_t* dataSize) {
   LockGuard lg(*this);
-  ESP_RETURN_ON_ERROR(Open(), TAG, "open failed");
+  esp_err_t error = Open();
+  if (error != ESP_OK) {
+    if (error == ESP_ERR_NVS_NOT_FOUND)
+      ESP_LOGD(TAG, "open failed");
+    else
+      ESP_LOGE(TAG, "open failed");
+    return error;
+  }
   if (dataSize) {
-    esp_err_t error = nvs_get_blob(handle, key.c_str(), NULL, dataSize);
+    error = nvs_get_blob(handle, key.c_str(), NULL, dataSize);
     if (error != ESP_OK) {
       if (error == ESP_ERR_NVS_NOT_FOUND)
         ESP_LOGD(TAG, "read '%s' failed", key.c_str());
@@ -278,7 +348,7 @@ esp_err_t NvsNamespace::Read(const std::string& key, void* data, size_t maxDataS
       return error;
     }
   }
-  esp_err_t error = nvs_get_blob(handle, key.c_str(), data, &maxDataSize);
+  error = nvs_get_blob(handle, key.c_str(), data, &maxDataSize);
   if (error == ESP_ERR_NVS_NOT_FOUND)
     ESP_LOGD(TAG, "read '%s' failed", key.c_str());
   else if (error != ESP_OK)
